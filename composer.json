@@ -1,0 +1,11 @@
+{
+    "name": "xuanlin/xuanlin",
+    "description": "composer lab",
+    "authors": [
+        {
+            "name": "Xuan.L",
+            "email": "40143119@gm.nfu.edu.tw"
+        }
+    ],
+    "require": {}
+}
