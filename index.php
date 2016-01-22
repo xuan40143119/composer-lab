@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__.'/bootstrap.php';
+require_once __DIR__.'vendor/autoload.php';
 
 // connect to dabase
 try {

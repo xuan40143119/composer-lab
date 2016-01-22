@@ -7,5 +7,7 @@
             "email": "40143119@gm.nfu.edu.tw"
         }
     ],
-    "require": {}
+    "require": {
+        "nesbot/carbon": "^1.21"
+    }
 }
