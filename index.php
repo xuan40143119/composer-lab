@@ -1,16 +1,13 @@
 <?php
 
-require __DIR__.'/bootstrap.php';
-require_once __DIR__.'vendor/autoload.php';
+// require __DIR__.'/bootstrap.php';
+require_once __DIR__.'/vendor/autoload.php';
 
-// connect to dabase
-try {
-    $dsn = 'mysql:host='.DB_HOST.';port='.DB_PORT.';dbname='.DB_DATABASE.';charset='.DB_CHARSET;
-    $pdo = new PDO($dsn, DB_USERNAME, DB_PASSWORD);
-} catch (PDOException $e) {
-    echo  "Error: ".$e->getMessage()."＜br/＞";
-    die();
-}
+// load data array: $posts
+require_once __DIR__.'/data/posts.php';
+
+use Carbon\Carbon;
+Carbon::setLocale('zh-tw');
 
 ?>
 <!DOCTYPE html>
@@ -82,7 +79,7 @@ try {
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">文章清單
-                    <small>{今日日期}</small>
+                    <small><?=Carbon::now(new DateTimeZone('Asia/Taipei'))->toDateString()?></small>
                 </h1>
             </div>
         </div>
@@ -90,22 +87,21 @@ try {
 
         <!-- Projects Row -->
         <div class="row">
-            <?php $statement = $pdo->query("SELECT * FROM `posts` ORDER BY `created_at` DESC LIMIT 3"); ?>
-            <?php while($row = $statement->fetch(PDO::FETCH_OBJ)): ?>
+            <?php foreach($posts as $post): ?>
             <div class="col-md-4 portfolio-item">
                 <a href="#">
                     <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                 </a>
                 <h3>
-                    <a href="#"><?=$row->title?></a>
+                    <a href="#"><?=$post['title']?></a>
                 </h3>
-                <p><?=mb_substr($row->content, 0, 130, "utf-8"),'…'?></p>
+                <p><?=mb_substr($post['content'], 0, 130, "utf-8"),'…'?></p>
                 <p class="text-right">
                     <span class="glyphicon glyphicon-time"></span>
-                    發表於 <?=$row->created_at?>
+                    發表於 <?=Carbon::createFromFormat('Y-m-d H:i:s', $post['created_at'], 'Asia/Taipei')->diffForHumans()?>
                 </p>
             </div>
-            <?php endwhile; ?>
+            <?php endforeach; ?>
         </div>
         <!-- /.row -->
 
